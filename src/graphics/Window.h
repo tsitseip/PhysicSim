@@ -85,7 +85,11 @@ namespace graphics {
             }
 
             glfwMakeContextCurrent(m_window);
-            
+
+            glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow*, int w, int h) {
+                glViewport(0, 0, w, h);
+            });
+
             glfwSwapInterval(0);
 
             if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
