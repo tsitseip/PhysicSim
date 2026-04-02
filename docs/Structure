@@ -1,0 +1,31 @@
+MyEngine/
+├── CMakeLists.txt
+├── src/
+│   ├── App/
+│   │   └── Main.cpp
+│   ├── Core/
+│   │   ├── Logger.h
+│   │   ├── Logger.cpp
+│   │   ├── EngineException.h
+│   │   └── FileSystem.h
+│   ├── Common/
+│   │   ├── Vector.h
+│   │   └── ISerializable.h
+│   ├── Interfaces/
+│   │   ├── IRenderer.h
+│   │   └── IPhysics.h
+│   ├── RenderLib/
+│   │   ├── OpenGLRenderer.h
+│   │   ├── OpenGLRenderer.cpp
+│   │   └── Helpers/
+│   │       ├── Shader.h
+│   │       ├── Shader.cpp
+│   │       ├── Buffer.h
+│   │       └── Buffer.cpp
+│   └── PhysicsLib/
+│       ├── NewtonianPhysics.h
+│       ├── NewtonianPhysics.cpp
+│       └── Helpers/
+│           ├── Integrator.h
+│           └── Integrator.cpp
+└── vendor/

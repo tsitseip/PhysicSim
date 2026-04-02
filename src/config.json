@@ -1,0 +1,62 @@
+{
+    "batchSize": 5000,
+    "window": {
+        "width": 800,
+        "height": 600,
+        "title": "N-Body Simulation"
+    },
+    "universe": {
+        "type": "pipeline",
+        "dt": 0.000001,
+        "trailFreq": 1000,
+        "pipeline": ["euler", "trail"]
+    },
+    "space": {
+        "type": "relativistic",
+        "G": 0.5,
+        "c": 100.0,
+        "softening": 0.001
+    },
+    "graphics": {
+        "type": "circle",
+        "focalLength": 5.0,
+        "cameraTarget": "Sun"
+    },
+    "bodies": [
+        { 
+            "name": "Sun",
+            "pos": [0.0, 0.0, 0.0],  
+            "vel": [0.0, 0.0, 0.0], 
+            "mass": 10.0, 
+            "radius": 0.05, 
+            "trail_enabled": false,
+            "red": 1.0,
+            "green": 0.0,
+            "blue": 1.0
+        },
+        { 
+            "name": "Earth", 
+            "pos": [-0.5, 0.0, 0.0], 
+            "vel": [0.0, 3.0, 0.0], 
+            "mass": 1.0, 
+            "radius": 0.03, 
+            "trail_enabled": true, 
+            "max_trail_size": 200,
+            "red": 0.2,
+            "green": 0.6,
+            "blue": 1.0
+        },
+        { 
+            "name": "Mars",  
+            "pos": [0.5, 0.0, 0.0], 
+            "vel": [0.0, -3.0, 0.0], 
+            "mass": 1.0, 
+            "radius": 0.03, 
+            "trail_enabled": true, 
+            "max_trail_size": 200,
+            "red": 1.0,
+            "green": 0.3,
+            "blue": 0.1
+        }
+    ]
+}
