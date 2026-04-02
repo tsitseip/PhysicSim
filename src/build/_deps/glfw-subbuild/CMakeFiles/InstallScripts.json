@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/pasha/tsitseip/project/src/build/_deps/glfw-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

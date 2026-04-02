@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/ConfiguratorTest.dir/link.d CMakeFiles/ConfiguratorTest.dir/tests/ConfiguratorTest.cpp.o -o ConfiguratorTest  _deps/glfw-build/src/libglfw3.a /usr/lib/librt.a -lm -ldl /usr/lib/libX11.so /usr/lib/libGLX.so /usr/lib/libOpenGL.so
