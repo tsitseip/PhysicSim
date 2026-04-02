@@ -86,6 +86,8 @@ namespace graphics {
 
             glfwMakeContextCurrent(m_window);
             
+            glfwSwapInterval(0);
+
             if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
                 core::cerr << core::constants::errors::FAIL_INIT_GLAD << core::nl;
                 exit(-1);
