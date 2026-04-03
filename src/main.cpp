@@ -38,6 +38,9 @@ int main() {
 
         core::thread physicsThread([&]() {
             while(running) {
+                if (graphics->isPaused()) {
+                    continue;
+                }
                 for (int i=0; i < batchSize; ++i){
                     universe->step(physicsBodies, *space, dt);
                     timer.tick.upd();

@@ -32,6 +32,9 @@ namespace graphics {
         bool m_showDebug = false; ///< Flag to toggle debug information display.
         bool m_f3PressedLast = false; ///< Tracks the state of the F3 key for toggling debug info.
 
+        core::atomic<bool> m_paused = false; /// < Flag to toggle pause/unpause physics
+        bool m_spacePressedLast = false; /// tracks the state of the space key for toggling the paused info.
+
     public:
         /**
          * @brief Constructs a GraphicsModule.
@@ -101,6 +104,15 @@ namespace graphics {
                 }
             } else { m_f3PressedLast = false; }
 
+            if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+                if (!m_spacePressedLast) {
+                    m_paused = !m_paused;
+                    m_spacePressedLast = true;
+                }
+            } else {
+                m_spacePressedLast = false;
+            }
+
             bool shifted = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
             T speed = (T)core::constants::graphics::INPUT_SPEED_DEFAULT;
 
@@ -143,6 +155,10 @@ namespace graphics {
          * @return Optional string containing the target name.
          */
         core::optional<core::string> getCameraTarget() const { return m_cameraTarget; }
+
+        bool isPaused() const {
+            return m_paused;
+        }
     };
 
 } // namespace graphics
