@@ -28,6 +28,13 @@ and you can start the project using one of this two paths (depending on wether y
 .\build\Debug\PhysicsSim.exe         
 ```
 
+Optionally, you can enable sanitizers for debugging (cannot be used together):
+```
+cmake -S . -B build -DDIMENSION=3 -DENABLE_TSAN=ON
+cmake -S . -B build -DDIMENSION=3 -DENABLE_ASAN=ON
+```
+TSAN detects data races between threads, ASAN detects memory errors (out-of-bounds, use-after-free).
+
 ## Modules
 
 There are 3 main modules and 3 supporting. Supporting are math, physics and core. Main are graphics, space, universe.

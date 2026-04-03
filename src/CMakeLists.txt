@@ -10,6 +10,21 @@ set(DIMENSION 3 CACHE STRING "Dimension of the simulation space")
 add_definitions(-DDIMENSION=${DIMENSION})
 message(STATUS "Building for Dimension: ${DIMENSION}")
 
+# 1b. Sanitizer Options (off by default, cannot be used together)
+# TSAN: detects data races between threads. Use: cmake -S . -B build -DENABLE_TSAN=ON
+# ASAN: detects memory errors (out-of-bounds, use-after-free). Use: cmake -S . -B build -DENABLE_ASAN=ON
+option(ENABLE_TSAN "Enable ThreadSanitizer" OFF)
+option(ENABLE_ASAN "Enable AddressSanitizer" OFF)
+if(ENABLE_TSAN)
+    add_compile_options(-fsanitize=thread -g)
+    add_link_options(-fsanitize=thread)
+    message(STATUS "ThreadSanitizer enabled")
+elseif(ENABLE_ASAN)
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
+    add_link_options(-fsanitize=address)
+    message(STATUS "AddressSanitizer enabled")
+endif()
+
 # 2. Find Dependencies
 find_package(OpenGL REQUIRED)
 
