@@ -133,13 +133,13 @@ namespace graphics {
                   const math::Vector<T, D>& offset, 
                   const math::Matrix<T, D>& rotation) override {
             
-            if (body.trailEnabled && !body.trail->empty() && body.active) {
+            if (body.trailEnabled && !body.trail.empty() && body.active) {
                 m_trailShader.use();
                 core::array<float> trailBuffer;
-                trailBuffer.reserve(body.trail->size() * 7);
+                trailBuffer.reserve(body.trail.size() * 7);
                 float id = 0;
-                float total = (float)body.trail->size();
-                for (const auto& trailPos : *body.trail) {
+                float total = (float)body.trail.size();
+                for (const auto& trailPos : body.trail) {
                     math::Vector<T, D> pos = trailPos * rotation;
                     math::Vector<T, 3> p = projectTo3D(pos, m_focalLength);
                     
@@ -161,7 +161,7 @@ namespace graphics {
                 glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
                 glEnableVertexAttribArray(1);
 
-                glDrawArrays(GL_LINE_STRIP, 0, (GLsizei)body.trail->size());
+                glDrawArrays(GL_LINE_STRIP, 0, (GLsizei)body.trail.size());
                 m_shader.use();
             }
 

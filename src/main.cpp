@@ -19,7 +19,8 @@ int main() {
         auto space    = config.createSpace();
         auto universe = config.createUniverse();
         auto physicsBodies = config.loadBodies();
-        auto renderBodies  = physicsBodies; // Clone for rendering
+        auto renderBodies  = physicsBodies;
+        auto bufferBodies  = physicsBodies;
 
         if (!graphics || !space || !universe) {
             core::cerr << core::constants::errors::MODULE_INIT_FAIL << core::nl;
@@ -42,13 +43,15 @@ int main() {
                     timer.tick.upd();
                 }
 
+                for (size_t i = 0; i < physicsBodies.size(); ++i) {
+                    bufferBodies[i].state = physicsBodies[i].state;
+                    bufferBodies[i].trail = physicsBodies[i].trail;
+                    bufferBodies[i].active = physicsBodies[i].active;
+                }
+            
                 {
                     core::lock_guard<core::mutex> lock(bodyMutex);
-                    for (size_t i = 0; i < physicsBodies.size(); ++i) {
-                        renderBodies[i].state = physicsBodies[i].state;
-                        renderBodies[i].trail = physicsBodies[i].trail;
-                        renderBodies[i].active = physicsBodies[i].active;
-                    }
+                    std::swap(bufferBodies, renderBodies);
                 }
                 // std::this_thread::sleep_for(std::chrono::microseconds(1));
             }

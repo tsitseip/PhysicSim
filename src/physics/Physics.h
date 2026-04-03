@@ -71,7 +71,7 @@ namespace physics {
         T radius; /**< The radius of the body. */
         bool active = true; /**< Whether the body is active in the simulation. */
 
-        core::shared_ptr<core::list<math::Vector<T, D>>> trail; /**< Shared pointer to the body's trail history. */
+        core::list<math::Vector<T, D>> trail; /**< The body's trail history. */
         bool trailEnabled = false; /**< Whether trailing is enabled for this body. */
         core::size_type maxTrailSize = 100; /**< The maximum number of points in the trail. */
 
@@ -80,7 +80,7 @@ namespace physics {
         /**
          * @brief Construct a new Body object.
          */
-        Body() : trail(core::make_shared<core::list<math::Vector<T, D>>>()) {}
+        Body() : trail(core::list<math::Vector<T, D>>()) {}
     };
 
     /**

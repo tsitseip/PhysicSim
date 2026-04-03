@@ -36,7 +36,7 @@ namespace universe::steps {
                              T dt) override {
             if (m_targetChanged) {
                 for (auto& body : bodies) {
-                    body.trail->clear();
+                    body.trail.clear();
                 }
                 m_targetChanged = false;
             }
@@ -65,10 +65,10 @@ namespace universe::steps {
                     if (focalFound) {
                         recordPos = recordPos - focalPos;
                     }
-                    body.trail->push_back(recordPos);
+                    body.trail.push_back(recordPos);
 
-                    if (body.trail->size() > body.maxTrailSize) {
-                        body.trail->pop_front();
+                    if (body.trail.size() > body.maxTrailSize) {
+                        body.trail.pop_front();
                     }
                 }
             }

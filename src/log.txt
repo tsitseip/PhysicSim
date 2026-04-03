@@ -1,0 +1,190 @@
+==================
+WARNING: ThreadSanitizer: data race (pid=623796)
+  Read of size 8 at 0x724800018000 by main thread:
+    #0 __tsan_memcpy <null> (libtsan.so.2+0x93366) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0xac05dd) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 glfwSwapBuffers /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/context.c:655 (PhysicsSim+0xac02f) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 graphics::Window::swapBuffers() /home/pasha/PhysicSim/src/./graphics/Window.h:136 (PhysicsSim+0x18d63) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 graphics::GraphicsModule<double, 3ul>::update() <null> (PhysicsSim+0x20a16) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 main /home/pasha/PhysicSim/src/main.cpp:71 (PhysicsSim+0x11bfd) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Previous write of size 8 at 0x724800018000 by thread T3:
+    #0 malloc <null> (libtsan.so.2+0x917e4) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0xae500f) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+
+  Location is heap block of size 372 at 0x724800018000 allocated by thread T3:
+    #0 malloc <null> (libtsan.so.2+0x917e4) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0xae500f) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+
+  Thread T3 'PhysicsSim:sh0' (tid=623800, running) created by main thread at:
+    #0 pthread_create <null> (libtsan.so.2+0x5fb47) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec936) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+SUMMARY: ThreadSanitizer: data race (/usr/lib/libgallium-26.0.3-arch1.1.so+0xac05dd) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2) 
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=623796)
+  Read of size 8 at 0x724800018160 by main thread:
+    #0 __tsan_memcpy <null> (libtsan.so.2+0x93366) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0xac0716) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 glfwSwapBuffers /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/context.c:655 (PhysicsSim+0xac02f) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 graphics::Window::swapBuffers() /home/pasha/PhysicSim/src/./graphics/Window.h:136 (PhysicsSim+0x18d63) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 graphics::GraphicsModule<double, 3ul>::update() <null> (PhysicsSim+0x20a16) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 main /home/pasha/PhysicSim/src/main.cpp:71 (PhysicsSim+0x11bfd) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Previous write of size 8 at 0x724800018160 by thread T3:
+    #0 malloc <null> (libtsan.so.2+0x917e4) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0xae500f) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+
+  Location is heap block of size 372 at 0x724800018000 allocated by thread T3:
+    #0 malloc <null> (libtsan.so.2+0x917e4) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0xae500f) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+
+  Thread T3 'PhysicsSim:sh0' (tid=623800, running) created by main thread at:
+    #0 pthread_create <null> (libtsan.so.2+0x5fb47) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec936) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+SUMMARY: ThreadSanitizer: data race (/usr/lib/libgallium-26.0.3-arch1.1.so+0xac0716) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2) 
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=623796)
+  Write of size 1 at 0x7fffd1b8d100 by main thread (mutexes: write M0, write M1):
+    #0 pthread_barrier_init <null> (libtsan.so.2+0x5bdc6) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5a2980) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwPlatformDestroyWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:2059 (PhysicsSim+0xcd787) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 glfwDestroyWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:437 (PhysicsSim+0xb8649) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 terminate /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/init.c:69 (PhysicsSim+0xac4f9) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 glfwTerminate /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/init.c:354 (PhysicsSim+0xad6b5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 graphics::Window::~Window() /home/pasha/PhysicSim/src/./graphics/Window.h:109 (PhysicsSim+0x18c18) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 std::default_delete<graphics::Window>::operator()(graphics::Window*) const /usr/include/c++/15.2.1/bits/unique_ptr.h:92 (PhysicsSim+0x277d9) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 std::unique_ptr<graphics::Window, std::default_delete<graphics::Window> >::~unique_ptr() /usr/include/c++/15.2.1/bits/unique_ptr.h:398 (PhysicsSim+0x1d92b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 graphics::GraphicsModule<double, 3ul>::~GraphicsModule() /home/pasha/PhysicSim/src/./graphics/GraphicsModule.h:25 (PhysicsSim+0x28afd) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #10 std::default_delete<graphics::GraphicsModule<double, 3ul> >::operator()(graphics::GraphicsModule<double, 3ul>*) const /usr/include/c++/15.2.1/bits/unique_ptr.h:92 (PhysicsSim+0x28b33) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #11 std::unique_ptr<graphics::GraphicsModule<double, 3ul>, std::default_delete<graphics::GraphicsModule<double, 3ul> > >::~unique_ptr() /usr/include/c++/15.2.1/bits/unique_ptr.h:398 (PhysicsSim+0x1e797) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #12 main /home/pasha/PhysicSim/src/main.cpp:79 (PhysicsSim+0x11d5d) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Previous write of size 1 at 0x7fffd1b8d100 by thread T3:
+    #0 pthread_barrier_destroy <null> (libtsan.so.2+0x5a72c) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5a1c54) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+
+  Location is stack of main thread.
+
+  Location is global '<null>' at 0x000000000000 ([stack]+0x1e100)
+
+  Mutex M0 (0x7f2ac5b8d300) created at:
+    #0 pthread_mutex_lock <null> (libtsan.so.2+0x5f03c) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libGLX_mesa.so.0+0x1bacc) (BuildId: eb56f85831d0d3b92a69bc522e3c4b9482f04349)
+    #2 glfwMakeContextCurrent /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/context.c:632 (PhysicsSim+0xabed2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwRefreshContextAttribs /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/context.c:358 (PhysicsSim+0xab017) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:2017 (PhysicsSim+0xcd529) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #10 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Mutex M1 (0x728800002c20) created at:
+    #0 pthread_mutex_init <null> (libtsan.so.2+0x5e23a) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec89a) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Thread T3 'PhysicsSim:sh0' (tid=623800, running) created by main thread at:
+    #0 pthread_create <null> (libtsan.so.2+0x5fb47) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec936) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+SUMMARY: ThreadSanitizer: data race (/usr/lib/libgallium-26.0.3-arch1.1.so+0x5a2980) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2) 
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=623796)
+  Write of size 1 at 0x7fffd1b8d190 by main thread (mutexes: write M0, write M1):
+    #0 pthread_barrier_init <null> (libtsan.so.2+0x5bdc6) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5a2980) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 terminate /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/init.c:91 (PhysicsSim+0xac73c) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 glfwTerminate /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/init.c:354 (PhysicsSim+0xad6b5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 graphics::Window::~Window() /home/pasha/PhysicSim/src/./graphics/Window.h:109 (PhysicsSim+0x18c18) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 std::default_delete<graphics::Window>::operator()(graphics::Window*) const /usr/include/c++/15.2.1/bits/unique_ptr.h:92 (PhysicsSim+0x277d9) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::unique_ptr<graphics::Window, std::default_delete<graphics::Window> >::~unique_ptr() /usr/include/c++/15.2.1/bits/unique_ptr.h:398 (PhysicsSim+0x1d92b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 graphics::GraphicsModule<double, 3ul>::~GraphicsModule() /home/pasha/PhysicSim/src/./graphics/GraphicsModule.h:25 (PhysicsSim+0x28afd) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 std::default_delete<graphics::GraphicsModule<double, 3ul> >::operator()(graphics::GraphicsModule<double, 3ul>*) const /usr/include/c++/15.2.1/bits/unique_ptr.h:92 (PhysicsSim+0x28b33) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 std::unique_ptr<graphics::GraphicsModule<double, 3ul>, std::default_delete<graphics::GraphicsModule<double, 3ul> > >::~unique_ptr() /usr/include/c++/15.2.1/bits/unique_ptr.h:398 (PhysicsSim+0x1e797) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #10 main /home/pasha/PhysicSim/src/main.cpp:79 (PhysicsSim+0x11d5d) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Previous write of size 1 at 0x7fffd1b8d190 by thread T3:
+    #0 pthread_barrier_destroy <null> (libtsan.so.2+0x5a72c) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5a1c54) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+
+  Location is stack of main thread.
+
+  Location is global '<null>' at 0x000000000000 ([stack]+0x1e190)
+
+  Mutex M0 (0x728800002858) created at:
+    #0 pthread_mutex_init <null> (libtsan.so.2+0x5e23a) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec87a) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Mutex M1 (0x728800002c20) created at:
+    #0 pthread_mutex_init <null> (libtsan.so.2+0x5e23a) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec89a) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+  Thread T3 'PhysicsSim:sh0' (tid=623800, running) created by main thread at:
+    #0 pthread_create <null> (libtsan.so.2+0x5fb47) (BuildId: f29521f558650bcc384c0178d8c6d0fd49466e29)
+    #1 <null> <null> (libgallium-26.0.3-arch1.1.so+0x5ec936) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2)
+    #2 _glfwInitGLX /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/glx_context.c:362 (PhysicsSim+0xd4585) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #3 _glfwPlatformCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/x11_window.c:1971 (PhysicsSim+0xcd1ff) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #4 glfwCreateWindow /home/pasha/PhysicSim/src/build_tsan/_deps/glfw-src/src/window.c:218 (PhysicsSim+0xb75c5) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #5 graphics::Window::Window(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /home/pasha/PhysicSim/src/./graphics/Window.h:80 (PhysicsSim+0x18a20) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #6 std::__detail::_MakeUniq<graphics::Window>::__single_object std::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /usr/include/c++/15.2.1/bits/unique_ptr.h:1084 (PhysicsSim+0x1d847) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #7 auto core::make_unique<graphics::Window, int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(int&, int&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) /home/pasha/PhysicSim/src/core/Globals.h:115 (PhysicsSim+0x18f3b) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #8 core::Configurator<double, 3ul>::createGraphicsModule() const /home/pasha/PhysicSim/src/core/Configurator.h:117 (PhysicsSim+0x1e4e2) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+    #9 main /home/pasha/PhysicSim/src/main.cpp:18 (PhysicsSim+0x117c3) (BuildId: 4b4616864eb584ebe0c487960aece2eeaf6defa8)
+
+SUMMARY: ThreadSanitizer: data race (/usr/lib/libgallium-26.0.3-arch1.1.so+0x5a2980) (BuildId: 28e0bed2f1c02db708ee96fd6b075e65dc9921d2) 
+==================
+ThreadSanitizer: reported 4 warnings
