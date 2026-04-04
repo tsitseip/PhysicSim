@@ -36,6 +36,8 @@ namespace graphics {
         bool m_spacePressedLast = false; /// tracks the state of the space key for toggling the paused info.
         double m_zoom = 1; /// Current zoom level for the camera.
 
+        T m_speed = (T)core::constants::graphics::INPUT_SPEED_DEFAULT;
+
     public:
         /**
          * @brief Constructs a GraphicsModule.
@@ -152,7 +154,7 @@ namespace graphics {
             }
 
             bool shifted = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
-            T speed = (T)core::constants::graphics::INPUT_SPEED_DEFAULT;
+            T speed = m_speed;
 
             core::array<int> held_dims;
             for(int d=0; d<D; ++d) {
@@ -180,6 +182,7 @@ namespace graphics {
                 core::cout << core::format(core::constants::ui::HUD_FORMAT, fps, tps) << core::nl << std::flush;
                 glfwSetWindowTitle(m_window->getHandle(), core::format(core::constants::ui::HUD_FORMAT, fps, tps).c_str());
             }
+            m_speed = 1.0 / fps;
         }
 
         /**
