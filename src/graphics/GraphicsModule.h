@@ -100,19 +100,19 @@ namespace graphics {
             } else if (yoffset < 0) {
                 m_zoom *= 0.9; // Zoom out by decreasing the zoom factor
             }
-            std::cout << "Zoom updated to: " << m_zoom << "\n";
+            // std::cout << "Zoom updated to: " << m_zoom << "\n";
         }
 
         static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-            if (yoffset > 0) {
-                std::cout << "Scrolled UP. Offset: " << yoffset << "\n";
-            } else if (yoffset < 0) {
-                std::cout << "Scrolled DOWN. Offset: " << yoffset << "\n";
-            }
+            // if (yoffset > 0) {
+            //     std::cout << "Scrolled UP. Offset: " << yoffset << "\n";
+            // } else if (yoffset < 0) {
+            //     std::cout << "Scrolled DOWN. Offset: " << yoffset << "\n";
+            // }
 
-            if (xoffset != 0) {
-                std::cout << "Scrolled HORIZONTALLY. Offset: " << xoffset << "\n";
-            }
+            // if (xoffset != 0) {
+            //     std::cout << "Scrolled HORIZONTALLY. Offset: " << xoffset << "\n";
+            // }
 
             GraphicsModule* instance = static_cast<GraphicsModule*>(glfwGetWindowUserPointer(window));
 
