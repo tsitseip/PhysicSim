@@ -131,7 +131,8 @@ namespace graphics {
          */
         void draw(const physics::Body<T, D>& body, 
                   const math::Vector<T, D>& offset, 
-                  const math::Matrix<T, D>& rotation) override {
+                  const math::Matrix<T, D>& rotation, 
+                  double zoom) override {
             
             if (body.trailEnabled && !body.trail.empty() && body.active) {
                 m_trailShader.use();
@@ -140,7 +141,7 @@ namespace graphics {
                 float id = 0;
                 float total = (float)body.trail.size();
                 for (const auto& trailPos : body.trail) {
-                    math::Vector<T, D> pos = trailPos * rotation;
+                    math::Vector<T, D> pos = trailPos * rotation * zoom;
                     math::Vector<T, 3> p = projectTo3D(pos, m_focalLength);
                     
                     trailBuffer.push_back((float)p[0]); 
@@ -167,11 +168,11 @@ namespace graphics {
 
             if (!body.active) return;
 
-            math::Vector<T, D> relativePos = (body.state.position - offset) * rotation;
+            math::Vector<T, D> relativePos = (body.state.position - offset) * rotation * zoom;
             math::Vector<T, 3> projected = projectTo3D(relativePos, m_focalLength); 
 
             T w = (D >= 3) ? (relativePos[D-1] + m_focalLength) : m_focalLength;
-            T projectedRadius = body.radius * (m_focalLength / w);
+            T projectedRadius = body.radius * (m_focalLength / w) * zoom;
             float pixelSize = (float)(projectedRadius * (float)core::constants::graphics::PIXEL_SCALING_FACTOR); 
             
             float buffer[8] = { 

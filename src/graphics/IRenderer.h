@@ -35,7 +35,8 @@ namespace graphics {
          */
         virtual void draw(const physics::Body<T, D>& body, 
                           const math::Vector<T, D>& offset = math::Vector<T, D>{}, 
-                          const math::Matrix<T, D>& rotation = math::Matrix<T, D>::identity()) = 0;
+                          const math::Matrix<T, D>& rotation = math::Matrix<T, D>::identity(),
+                          double zoom = 1.0) = 0;
         
         /**
          * @brief Prepares the renderer for drawing.

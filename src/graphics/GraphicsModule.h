@@ -34,6 +34,7 @@ namespace graphics {
 
         core::atomic<bool> m_paused = false; /// < Flag to toggle pause/unpause physics
         bool m_spacePressedLast = false; /// tracks the state of the space key for toggling the paused info.
+        double m_zoom = 1; /// Current zoom level for the camera.
 
     public:
         /**
@@ -45,7 +46,11 @@ namespace graphics {
         GraphicsModule( core::unique_ptr<Window> window, 
                         core::unique_ptr<IRenderer<T, D>> renderer,
                         core::optional<core::string> cameraTarget = std::nullopt)
-            : m_window(core::move(window)), m_renderer(core::move(renderer)), m_cameraTarget(cameraTarget) {}
+            : m_window(core::move(window)), m_renderer(core::move(renderer)), m_cameraTarget(cameraTarget) {
+                auto window_ = m_window->getHandle();
+                glfwSetWindowUserPointer(window_, this);
+                glfwSetScrollCallback(window_, scroll_callback);
+            }
 
         /**
          * @brief Checks if the window is still open.
@@ -76,7 +81,7 @@ namespace graphics {
 
             m_renderer->begin();
             for (const auto& body : bodies) {
-                m_renderer->draw(body, posOffset, m_cameraRotation);
+                m_renderer->draw(body, posOffset, m_cameraRotation, m_zoom);
             }
             m_renderer->end();
         }
@@ -89,12 +94,45 @@ namespace graphics {
             m_window->pollEvents();
         }
 
+        void processScrollEvent(double yoffset) {
+            if (yoffset > 0) {
+                m_zoom *= 1.1; // Zoom in by increasing the zoom factor
+            } else if (yoffset < 0) {
+                m_zoom *= 0.9; // Zoom out by decreasing the zoom factor
+            }
+            std::cout << "Zoom updated to: " << m_zoom << "\n";
+        }
+
+        static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+            if (yoffset > 0) {
+                std::cout << "Scrolled UP. Offset: " << yoffset << "\n";
+            } else if (yoffset < 0) {
+                std::cout << "Scrolled DOWN. Offset: " << yoffset << "\n";
+            }
+
+            if (xoffset != 0) {
+                std::cout << "Scrolled HORIZONTALLY. Offset: " << xoffset << "\n";
+            }
+
+            GraphicsModule* instance = static_cast<GraphicsModule*>(glfwGetWindowUserPointer(window));
+
+            if (instance) {
+                instance->processScrollEvent(yoffset);
+            }
+        }
+
         /**
          * @brief Handles user input for camera control and debug display toggling.
          * @param bodies The array of physical bodies in the simulation (used for camera targeting).
          */
         void handleInput(core::array<physics::Body<T, D>>& bodies) {
             GLFWwindow* window = m_window->getHandle();
+
+            glfwPollEvents();
+
+            if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                glfwSetWindowShouldClose(window, true);
+            }
 
             if (glfwGetKey(window, GLFW_KEY_F3) == GLFW_PRESS) {
                 if (!m_f3PressedLast) {
