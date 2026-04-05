@@ -88,6 +88,7 @@ int main() {
             }
         }
         running = false;
+        cv.notify_one();
         physicsThread.join();
 
     } catch (const core::exception& e) {
