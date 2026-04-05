@@ -33,14 +33,18 @@ int main() {
 
         universe->setCameraTarget(graphics->getCameraTarget());
 
-        core::mutex bodyMutex;
-        core::atomic<bool> running = true;
+        std::mutex bodyMutex;
+        std::atomic<bool> running = true;
 
-        core::thread physicsThread([&]() {
+        std::condition_variable cv;
+        std::mutex cvMutex;
+
+        std::thread physicsThread([&]() {
             while(running) {
-                if (graphics->isPaused()) {
-                    continue;
-                }
+
+                std::unique_lock<std::mutex> lk(cvMutex);
+                cv.wait(lk, [&] { return !running || !graphics->isPaused(); });
+
                 for (int i=0; i < batchSize; ++i){
                     universe->step(physicsBodies, *space, dt);
                     timer.tick.upd();
@@ -65,10 +69,15 @@ int main() {
             timer.frame.upd();
             graphics->clear();
 
+            bool wasPaused = graphics->isPaused();
             {
                 core::lock_guard<core::mutex> lock(bodyMutex);
                 graphics->handleInput(renderBodies);
                 graphics->render(renderBodies);
+            }
+
+            if (wasPaused != graphics->isPaused()) {
+                cv.notify_one();
             }
 
             graphics->update();

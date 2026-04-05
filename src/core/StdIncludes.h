@@ -21,6 +21,7 @@
 #include <string_view>
 #include <exception>
 #include <utility>
+#include <condition_variable>
 
 #include <nlohmann/json.hpp>
 
