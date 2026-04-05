@@ -12,7 +12,30 @@ Project is designed to be as fast as possible, leaving plenty of room for improv
 
 ## How to run
 
-To build you need to run following command
+### Using Make (recommended)
+
+From the `src/` directory, you can use the Makefile for easy incremental builds:
+
+| Command | Description |
+|---|---|
+| `make` | Configure (first time only) + incremental build |
+| `make run` | Build and run the simulation |
+| `make tsan` | Build with ThreadSanitizer (detects data races) |
+| `make asan` | Build with AddressSanitizer (detects memory errors) |
+| `make clean` | Remove build directory |
+| `make rebuild` | Clean + full rebuild |
+
+| Option | Default | Example |
+|---|---|---|
+| `DIMENSION` | 3 | `make DIMENSION=2` |
+| `JOBS` | number of CPU cores | `make JOBS=4` |
+| `BUILD_DIR` | build | `make BUILD_DIR=build_debug` |
+
+Note: TSAN and ASAN cannot be used together.
+
+### Using CMake directly
+
+From the `src/` directory, run:
 ```
 cmake -S . -B build -DDIMENSION=3
 ```
