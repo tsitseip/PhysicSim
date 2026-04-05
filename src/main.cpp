@@ -1,6 +1,7 @@
 #include "core/Configurator.h"
 #include "core/Globals.h"
 #include "core/Timer.h"
+#include "core/SystemMonitor.h"
 
 int main() {
     try {
@@ -28,6 +29,7 @@ int main() {
         }
 
         core::Timer timer;
+        core::SystemMonitor monitor;
         double dt = config.getDeltaTime();
         int batchSize = config.getBatchSize();
 
@@ -82,7 +84,7 @@ int main() {
 
             graphics->update();
             if (timer.tick_one_second()) {
-                graphics->updateHUD(timer.frame.rate, timer.tick.rate);
+                graphics->updateHUD(timer.frame.rate, timer.tick.rate, monitor.getSnapshot());
             }
         }
         running = false;

@@ -133,6 +133,7 @@ namespace core::constants {
     namespace ui {
         constexpr std::string_view START_MSG = "Starting Simulation in {}D";
         constexpr std::string_view HUD_FORMAT = "FPS: {} | TPS: {}";
+        constexpr std::string_view HUD_FORMAT_DETAILED = "FPS: {} | TPS: {} | CPU: {} ({} Cores, {:.1f}%) | RAM: {:.1f}/{:.1f} GB ({:.1f}%) | GPU: {} | VRAM: {:.1f}/{:.1f} GB ({:.1f}%)";
     } // namespace ui
 
 } // namespace core::constants

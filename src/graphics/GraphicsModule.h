@@ -9,12 +9,22 @@
 #include "graphics/IRenderer.h"
 #include "physics/Physics.h"
 #include "core/Globals.h"
+#include "core/SystemMonitor.h"
 
 /**
  * @namespace graphics
  * @brief Graphics rendering components and utilities.
  */
 namespace graphics {
+
+    /**
+     * @brief HUD display modes.
+     */
+    enum class HUDMode {
+        NONE,      ///< No HUD display.
+        BASIC,     ///< Basic HUD (FPS, TPS).
+        DETAILED   ///< Detailed HUD (FPS, TPS, CPU, RAM, GPU, VRAM).
+    };
 
     /**
      * @brief GraphicsModule class responsible for managing the rendering process, user input, and camera control in the simulation.
@@ -29,7 +39,7 @@ namespace graphics {
         core::optional<core::string> m_cameraTarget; ///< The name of the body the camera is following.
         math::Matrix<T, D> m_cameraRotation = math::Matrix<T, D>::identity(); ///< The current camera rotation matrix.
 
-        bool m_showDebug = false; ///< Flag to toggle debug information display.
+        HUDMode m_hudMode = HUDMode::NONE; ///< Current HUD display mode.
         bool m_f3PressedLast = false; ///< Tracks the state of the F3 key for toggling debug info.
 
         core::atomic<bool> m_paused = false; /// < Flag to toggle pause/unpause physics
@@ -138,8 +148,18 @@ namespace graphics {
 
             if (glfwGetKey(window, GLFW_KEY_F3) == GLFW_PRESS) {
                 if (!m_f3PressedLast) {
-                    m_showDebug = !m_showDebug;
-                    if (!m_showDebug) glfwSetWindowTitle(window, core::string(core::constants::graphics::WINDOW_TITLE_DEFAULT).c_str());
+                    bool shifted = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || 
+                                    glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS);
+                    
+                    if (shifted) {
+                        m_hudMode = (m_hudMode == HUDMode::DETAILED) ? HUDMode::NONE : HUDMode::DETAILED;
+                    } else {
+                        m_hudMode = (m_hudMode == HUDMode::BASIC) ? HUDMode::NONE : HUDMode::BASIC;
+                    }
+
+                    if (m_hudMode == HUDMode::NONE) {
+                        glfwSetWindowTitle(window, core::string(core::constants::graphics::WINDOW_TITLE_DEFAULT).c_str());
+                    }
                     m_f3PressedLast = true;
                 }
             } else { m_f3PressedLast = false; }
@@ -173,15 +193,31 @@ namespace graphics {
         }
 
         /**
-         * @brief Updates the HUD with current FPS and TPS.
+         * @brief Updates the HUD with current FPS, TPS and system information.
          * @param fps Current frames per second.
          * @param tps Current ticks per second.
+         * @param sys Current system information snapshot.
          */
-        void updateHUD(int fps, int tps) {
-            if (m_showDebug) {
-                core::cout << core::format(core::constants::ui::HUD_FORMAT, fps, tps) << core::nl << std::flush;
-                glfwSetWindowTitle(m_window->getHandle(), core::format(core::constants::ui::HUD_FORMAT, fps, tps).c_str());
+        void updateHUD(int fps, int tps, const core::SysInfo& sys) {
+            if (m_hudMode == HUDMode::NONE) {
+                m_speed = 1.0 / fps;
+                return;
             }
+
+            core::string hud;
+            if (m_hudMode == HUDMode::BASIC) {
+                hud = core::format(core::constants::ui::HUD_FORMAT, fps, tps);
+            } else {
+                hud = core::format(core::constants::ui::HUD_FORMAT_DETAILED, 
+                    fps, tps, sys.cpuModel, sys.cores, sys.cpuUsage, 
+                    sys.ramTotal - sys.ramAvailable, sys.ramTotal, sys.ramUsage,
+                    sys.gpuModel, 
+                    sys.vramTotal - sys.vramAvailable, sys.vramTotal, sys.vramUsage);
+            }
+
+            core::cout << hud << core::nl << std::flush;
+            glfwSetWindowTitle(m_window->getHandle(), hud.c_str());
+            
             m_speed = 1.0 / fps;
         }
 
